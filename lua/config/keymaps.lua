@@ -4,6 +4,14 @@
 
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 
+-- Restore H and L to native vim behavior (top/bottom of screen)
+vim.keymap.del("n", "<S-h>")
+vim.keymap.del("n", "<S-l>")
+
+-- Buffer navigation
+vim.keymap.set("n", "<leader>bf", "<cmd>bfirst<cr>", { desc = "First buffer" })
+vim.keymap.set("n", "<leader>bl", "<cmd>blast<cr>", { desc = "Last buffer" })
+
 -- Toggle background transparency
 local transparent = true
 vim.keymap.set("n", "<leader>bg", function()
