@@ -16,6 +16,12 @@ return {
         height = 0.35,
       },
     },
+    lazygit = {
+      win = {
+        width = 0.9,
+        height = 0.9,
+      },
+    },
   },
   keys = {
     {
