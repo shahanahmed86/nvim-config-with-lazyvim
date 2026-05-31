@@ -13,18 +13,31 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
       if has_session then
         persistence.load()
-        -- wipe leftover [No Name] and directory buffers created before session loaded
+        -- wipe leftover [No Name], directory, and deleted-file buffers
         for _, buf in ipairs(vim.api.nvim_list_bufs()) do
           local name = vim.api.nvim_buf_get_name(buf)
           local is_empty = name == ""
           local is_dir_buf = vim.fn.isdirectory(name) == 1
-          if (is_empty or is_dir_buf) and vim.api.nvim_buf_is_valid(buf) then
+          local is_missing = name ~= "" and vim.fn.filereadable(name) == 0 and vim.fn.isdirectory(name) == 0
+          if (is_empty or is_dir_buf or is_missing) and vim.api.nvim_buf_is_valid(buf) then
             vim.api.nvim_buf_delete(buf, { force = true })
           end
         end
-        vim.schedule(function()
+        vim.defer_fn(function()
           Snacks.explorer.open()
-        end)
+          -- safely set filetypes for restored buffers without triggering BufRead
+          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+            if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype == "" then
+              local name = vim.api.nvim_buf_get_name(buf)
+              if name ~= "" and vim.fn.getfsize(name) < 1.5 * 1024 * 1024 then
+                local ft = vim.filetype.match({ filename = name, buf = buf })
+                if ft then
+                  vim.bo[buf].filetype = ft
+                end
+              end
+            end
+          end
+        end, 100)
       end
     end
   end,
