@@ -7,6 +7,9 @@ return {
         position = "vertical",
         split_ratio = 0.35,
       },
+      refresh = {
+        enable = false,
+      },
     })
   end,
 }
