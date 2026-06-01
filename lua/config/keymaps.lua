@@ -17,6 +17,9 @@ vim.keymap.set("n", "<leader>bf", "<cmd>bfirst<cr>", { desc = "First buffer" })
 vim.keymap.set("n", "<leader>bl", "<cmd>blast<cr>", { desc = "Last buffer" })
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Tab>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+-- Paste over selection without overwriting the yank register
+vim.keymap.set("x", "p", '"_dP', { desc = "Paste without yanking replaced text" })
+
 -- Toggle background transparency
 local transparent = true
 vim.keymap.set("n", "<leader>bg", function()
