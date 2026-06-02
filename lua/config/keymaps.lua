@@ -2,8 +2,6 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode" })
-
 -- Restore H and L to native vim behavior (top/bottom of screen)
 vim.keymap.del("n", "<S-h>")
 vim.keymap.del("n", "<S-l>")
