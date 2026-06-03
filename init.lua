@@ -29,11 +29,14 @@ vim.api.nvim_create_autocmd("VimEnter", {
           for _, buf in ipairs(vim.api.nvim_list_bufs()) do
             if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype == "" then
               local name = vim.api.nvim_buf_get_name(buf)
-              if name ~= "" and vim.fn.getfsize(name) < 1.5 * 1024 * 1024 then
-                local ft = vim.filetype.match({ filename = name, buf = buf })
-                if ft then
-                  vim.bo[buf].filetype = ft
-                end
+              local size = vim.fn.getfsize(name)
+              if name ~= "" and size > 0 and size < 1.5 * 1024 * 1024 then
+                pcall(function()
+                  local ft = vim.filetype.match({ filename = name, buf = buf })
+                  if ft then
+                    vim.bo[buf].filetype = ft
+                  end
+                end)
               end
             end
           end
