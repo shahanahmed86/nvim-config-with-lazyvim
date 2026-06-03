@@ -11,9 +11,13 @@ vim.api.nvim_create_autocmd("TermClose", {
 return {
   "folke/snacks.nvim",
   opts = {
+    bigfile = { enabled = false },
     terminal = {
       win = {
-        height = 0.35,
+        position = "float",
+        height = 0.9,
+        width = 0.9,
+        border = "rounded",
       },
     },
     lazygit = {
@@ -27,7 +31,7 @@ return {
     {
       "<C-/>",
       function()
-        Snacks.terminal.toggle(nil, { win = { height = 0.35 } })
+        Snacks.terminal.toggle(nil, { win = { position = "float", height = 0.9, width = 0.9, border = "rounded" } })
       end,
       desc = "Toggle terminal",
       mode = { "n", "t" },
