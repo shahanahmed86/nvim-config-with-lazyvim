@@ -19,6 +19,7 @@ return {
     views = {
       hover = {
         border = { style = "rounded", padding = { 0, 1 } },
+        position = { row = 2, col = 0 },
       },
     },
   },
