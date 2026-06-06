@@ -18,6 +18,14 @@ vim.keymap.set("n", "<S-Tab>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 -- Paste over selection without overwriting the yank register
 vim.keymap.set("x", "p", '"_dP', { desc = "Paste without yanking replaced text" })
 
+-- Focus diagnostic float to allow selecting/copying text
+vim.keymap.set("n", "<leader>df", function()
+  local _, winid = vim.diagnostic.open_float({ focus = false, scope = "cursor" })
+  if winid then
+    vim.api.nvim_set_current_win(winid)
+  end
+end, { desc = "Focus diagnostic float" })
+
 -- Toggle background transparency
 local transparent = true
 vim.keymap.set("n", "<leader>bg", function()
