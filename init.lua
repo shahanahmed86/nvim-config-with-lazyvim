@@ -1,6 +1,22 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 
+vim.api.nvim_create_autocmd("BufDelete", {
+  callback = function()
+    vim.schedule(function()
+      local listed = vim.tbl_filter(function(buf)
+        return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
+      end, vim.api.nvim_list_bufs())
+      local only_empty = #listed == 1
+        and vim.api.nvim_buf_get_name(listed[1]) == ""
+        and vim.api.nvim_buf_get_lines(listed[1], 0, -1, false)[1] == ""
+      if #listed == 0 or only_empty then
+        Snacks.dashboard.open()
+      end
+    end)
+  end,
+})
+
 vim.api.nvim_create_autocmd("VimEnter", {
   nested = true,
   callback = function()
