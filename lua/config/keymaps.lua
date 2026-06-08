@@ -13,6 +13,7 @@ vim.keymap.del("n", "[b")
 -- Buffer navigation
 vim.keymap.set("n", "<leader>bf", "<cmd>bfirst<cr>", { desc = "First buffer" })
 vim.keymap.set("n", "<leader>bl", "<cmd>blast<cr>", { desc = "Last buffer" })
+vim.keymap.set("n", "<leader>bn", "<cmd>enew<cr>", { desc = "New buffer" })
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Tab>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 -- Paste over selection without overwriting the yank register
