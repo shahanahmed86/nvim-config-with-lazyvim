@@ -27,6 +27,23 @@ vim.keymap.set("n", "<leader>df", function()
   end
 end, { desc = "Focus diagnostic float" })
 
+-- Copy file path with line number to clipboard
+vim.keymap.set("n", "<leader>al", function()
+  local path = vim.fn.expand("%:p")
+  local line = vim.fn.line(".")
+  local result = path .. ":" .. line
+  vim.fn.setreg("+", result)
+  vim.notify(result, vim.log.levels.INFO, { title = "Copied" })
+end, { desc = "Copy absolute path with line number" })
+
+vim.keymap.set("n", "<leader>rl", function()
+  local path = vim.fn.expand("%:.")
+  local line = vim.fn.line(".")
+  local result = path .. ":" .. line
+  vim.fn.setreg("+", result)
+  vim.notify(result, vim.log.levels.INFO, { title = "Copied" })
+end, { desc = "Copy relative path with line number" })
+
 -- Toggle background transparency
 local transparent = true
 vim.keymap.set("n", "<leader>bg", function()
