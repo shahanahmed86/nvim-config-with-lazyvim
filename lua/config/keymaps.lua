@@ -44,6 +44,18 @@ vim.keymap.set("n", "<leader>rl", function()
   vim.notify(result, vim.log.levels.INFO, { title = "Copied" })
 end, { desc = "Copy relative path with line number" })
 
+vim.keymap.set("n", "<leader>ap", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  vim.notify(path, vim.log.levels.INFO, { title = "Copied" })
+end, { desc = "Copy absolute path" })
+
+vim.keymap.set("n", "<leader>rp", function()
+  local path = vim.fn.expand("%:.")
+  vim.fn.setreg("+", path)
+  vim.notify(path, vim.log.levels.INFO, { title = "Copied" })
+end, { desc = "Copy relative path" })
+
 -- Toggle background transparency
 local transparent = true
 vim.keymap.set("n", "<leader>bg", function()
