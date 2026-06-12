@@ -28,21 +28,35 @@ vim.keymap.set("n", "<leader>df", function()
 end, { desc = "Focus diagnostic float" })
 
 -- Copy file path with line number to clipboard
+-- <Cmd> keeps us inside visual mode so line("v") reflects the live selection
+function _G._copy_path_with_lines(expand_pattern)
+  local s, e = vim.fn.line("v"), vim.fn.line(".")
+  if s > e then s, e = e, s end
+  local path = vim.fn.expand(expand_pattern)
+  local result = path .. (s ~= e and (":" .. s .. "-" .. e) or (":" .. s))
+  vim.fn.setreg("+", result)
+  vim.notify(result, vim.log.levels.INFO, { title = "Copied" })
+end
+
 vim.keymap.set("n", "<leader>al", function()
-  local path = vim.fn.expand("%:p")
-  local line = vim.fn.line(".")
-  local result = path .. ":" .. line
+  local result = vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")
   vim.fn.setreg("+", result)
   vim.notify(result, vim.log.levels.INFO, { title = "Copied" })
 end, { desc = "Copy absolute path with line number" })
 
+vim.keymap.set("x", "<leader>al",
+  "<Cmd>lua _copy_path_with_lines('%:p')<CR>",
+  { desc = "Copy absolute path with line range" })
+
 vim.keymap.set("n", "<leader>rl", function()
-  local path = vim.fn.expand("%:.")
-  local line = vim.fn.line(".")
-  local result = path .. ":" .. line
+  local result = vim.fn.expand("%:.") .. ":" .. vim.fn.line(".")
   vim.fn.setreg("+", result)
   vim.notify(result, vim.log.levels.INFO, { title = "Copied" })
 end, { desc = "Copy relative path with line number" })
+
+vim.keymap.set("x", "<leader>rl",
+  "<Cmd>lua _copy_path_with_lines('%:.')<CR>",
+  { desc = "Copy relative path with line range" })
 
 vim.keymap.set("n", "<leader>ap", function()
   local path = vim.fn.expand("%:p")
